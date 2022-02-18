@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Dashbord</title>
+    <style>
+      * {
+        margin: 0;
+        background: #131516;
+        color: white;
+      }
+
+      canvas {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="730" height="610"></canvas>
+    <p align="center">Press D for drowing and C for clear</p>
+
+    <script>
+      var can = document.querySelector("canvas");
+      var ctx = can.getContext("2d");
+
+      can.width = window.innerWidth - 30;
+      can.height = window.innerHeight - 50;
+
+      let x = -1;
+      let y = -1;
+
+      let bosilgan = "";
+
+      can.onmousemove = (e) => {
+        if (bosilgan == "d") {
+          ctx.strokeStyle = "white";
+          ctx.lineWidth = 4;
+
+          if (x == -1 && y == -1) {
+            ctx.beginPath();
+
+            x = e.clientX;
+            y = e.clientY;
+          }
+
+          ctx.moveTo(x, y);
+          ctx.lineTo(e.clientX, e.clientY);
+          ctx.stroke(); // *22
+
+          x = e.clientX;
+          y = e.clientY;
+        }
+
+        let size = 30;
+        if (bosilgan == "c") {
+          ctx.clearRect(e.clientX - size, e.clientY - size, size * 2, size * 2);
+        }
+      };
+
+      document.addEventListener("keydown", (e) => {
+        bosilgan = e.key;
+      });
+
+      document.addEventListener("keyup", (e) => {
+        bosilgan = "";
+
+        x = -1;
+        y = -1;
+      });
+    </script>
+  </body>
+</html>
